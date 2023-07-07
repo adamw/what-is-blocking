@@ -8,6 +8,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.softwaremill.Stats.sleep;
@@ -34,7 +35,8 @@ public class DatagramClient {
             });
         }
 
-        sleep(20000);
+        e.shutdown();
+        e.awaitTermination(1, TimeUnit.DAYS);
     }
 
     private static void doSend(InetAddress IPAddress) throws Exception {

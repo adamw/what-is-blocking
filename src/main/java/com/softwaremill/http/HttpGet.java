@@ -7,6 +7,7 @@ import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.softwaremill.Stats.startStatsThread;
@@ -26,7 +27,8 @@ public class HttpGet {
             });
         }
 
-        Thread.sleep(10000);
+        e.shutdown();
+        e.awaitTermination(1, TimeUnit.DAYS);
     }
 
     private static void sendHttpThroughSocket() {

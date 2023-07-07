@@ -1,14 +1,14 @@
 package com.softwaremill;
 
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Function;
 
 import static com.softwaremill.Stats.sleep;
 import static com.softwaremill.Stats.startStatsThread;
 
 public class VirtualThreads {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         var started = new AtomicInteger(0);
         startStatsThread(unused -> "started: " + started.get());
         var e = Executors.newVirtualThreadPerTaskExecutor();
@@ -17,7 +17,7 @@ public class VirtualThreads {
                 started.incrementAndGet();
                 sleep(4000);});
         }
-
-        sleep(5000);
+        e.shutdown();
+        e.awaitTermination(1, TimeUnit.DAYS);
     }
 }
